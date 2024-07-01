@@ -6,7 +6,8 @@
     "./button": "./src/button.tsx",
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx",
-    "./test": "./src/test.tsx"
+    "./test": "./src/test.tsx",
+    "./appbar": "./src/appbar.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
