@@ -19,7 +19,7 @@ model User {
   name      String
   number    String  @unique
   password  String
-  onRampTransaction OnRampTransaction[]
+  OnRampTransaction OnRampTransaction[]
   balance Balance[]
 }
 
@@ -34,7 +34,7 @@ model OnRampTransaction {
   id        Int           @id @default(autoincrement())
   status    onRampStatus
   token     String        @unique
-  provider  Providers
+  provider  String
   amount    Int
   startTime DateTime
   userId    Int
@@ -42,21 +42,17 @@ model OnRampTransaction {
 }
 
 model Balance {
-  id Int @unique @default(autoincrement())
-  userId Int @unique
+  id     Int  @unique   @default(autoincrement())
+  userId Int  @unique
   amount Int
   locked Int
-  user User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id])
 }
 
 
 enum AuthType {
   Google
   Github
-}
-
-enum Providers {
-  HDFCBank
 }
 
 enum onRampStatus {

@@ -3,6 +3,7 @@ import prisma from "@repo/db/client";
 import bcrypt from "bcrypt"
 import type { AuthOptions } from "next-auth";
 import { pages } from "next/dist/build/templates/app-page";
+import { Session } from "inspector";
 
 
 export const authOptions = {
@@ -22,9 +23,8 @@ export const authOptions = {
                         number: credentials.phone
                     }
                 });
-
                 if(existingUser) {
-                    const passwordValidation = await bcrypt.compare(credentials.password, existingUser.password);
+                    const passwordValidation = await bcrypt.compare(hashedPassword, existingUser.password);
                     if (passwordValidation) {
                         return {
                             id: existingUser.id.toString(),
@@ -64,6 +64,7 @@ export const authOptions = {
     callbacks: {
         async session({token, session}: any) {
             session.user.id = token.sub
+            return session;
         }
     },
     pages: {
