@@ -4,13 +4,27 @@ import prisma from "@repo/db/client";
 const app = express();
 const PORT = 3003;
 
+app.use(express.json());
+
 app.post("/hdfcWebhook", async (req, res) => {
     //Add zod validation
     
     const paymentInfo = {
         token: req.body.token,
-        userId: req.body.user_identifier,
-        amount: req.body.amount
+        userId: Number(req.body.user_identifier),
+        amount: Number(req.body.amount)
+    }
+
+    const txn = await prisma.onRampTransaction.findUnique({
+        where: {
+            token: paymentInfo.token
+        }
+    });
+
+    if(txn?.status != "Processing") {
+        return res.status(400).json({
+            message: "Transaction Already Processed"
+        })
     }
 
     try {
@@ -37,7 +51,7 @@ app.post("/hdfcWebhook", async (req, res) => {
         ]);
 
         res.status(200).json({
-            message: "Transaction Succesfull"
+            message: "Transaction Captured"
         });
         
     }

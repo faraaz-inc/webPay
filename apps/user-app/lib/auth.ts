@@ -24,7 +24,8 @@ export const authOptions = {
                     }
                 });
                 if(existingUser) {
-                    const passwordValidation = await bcrypt.compare(hashedPassword, existingUser.password);
+                    console.log(existingUser)
+                    const passwordValidation = await bcrypt.compare(credentials.password, existingUser.password);
                     if (passwordValidation) {
                         return {
                             id: existingUser.id.toString(),
@@ -66,8 +67,5 @@ export const authOptions = {
             session.user.id = token.sub
             return session;
         }
-    },
-    pages: {
-        
     }
 }

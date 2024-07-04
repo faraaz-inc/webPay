@@ -1,6 +1,4 @@
 
-
-
 interface appBarProps {
     user?: {
         name?: string | null;
