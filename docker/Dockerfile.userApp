@@ -1,0 +1,18 @@
+FROM node:20.12.0-alpine3.19
+
+WORKDIR /app
+
+# copy over all the files to the base ubuntu image
+COPY . .
+
+# install dependencies
+RUN npm install
+
+# install prisma client
+RUN npm run db:generate
+
+# build the app
+RUN npm run build:user-app
+
+# run the image
+CMD ["npm", "run", "start:user-app"]

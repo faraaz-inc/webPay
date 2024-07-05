@@ -6,7 +6,11 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db:generate": "cd packages/db && npx prisma generate && cd ../.."
+    "db:generate": "cd packages/db && npx prisma generate && cd ../..",
+    "build:user-app": "cd apps/user-app && npm run build",
+    "build:webhooks": "cd apps/bank-webhook && npm run build",
+    "start:user-app": "cd apps/user-app && npm run start",
+    "start:webhooks": "cd apps/bank-webhook && npm run start"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
