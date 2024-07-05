@@ -12,7 +12,7 @@ export function RecentTransactions({ transactions }: {
         provider: string
     }[]
 }) {
-    const sortedTransactions = transactions.sort((a, b) => b.time.getTime() - a.time.getTime());
+    const sortedTransactions = transactions.sort((a, b) => b.time.getTime() - a.time.getTime()).slice(0, 5);
     
     if(!transactions.length) {
         return <div className="w-full mt-8"> 
@@ -26,7 +26,7 @@ export function RecentTransactions({ transactions }: {
         </div>
     }
     return <div className="w-full mt-8">
-        <Card title="Recent Transactions">
+        <Card title="Recent OnRamp Transactions">
             <div className="mt-5">
                 {sortedTransactions.map(transaction => {
                     

@@ -20,7 +20,9 @@ model User {
   number    String  @unique
   password  String
   OnRampTransaction OnRampTransaction[]
-  balance Balance[]
+  balance           Balance[]
+  sentTransfers     p2pTransactions[]     @relation(name: "FromUserRelation")
+  recievedTransfers p2pTransactions[]     @relation(name: "ToUserRelation")
 }
 
 model Merchant {
@@ -32,7 +34,7 @@ model Merchant {
 
 model OnRampTransaction {
   id        Int           @id @default(autoincrement())
-  status    onRampStatus
+  status    TransactionStatus
   token     String        @unique
   provider  String
   amount    Int
@@ -49,13 +51,24 @@ model Balance {
   user   User @relation(fields: [userId], references: [id])
 }
 
+model p2pTransactions {
+  id          Int     @unique @default(autoincrement())
+  amount      Int
+  status      TransactionStatus
+  timestamp   DateTime
+  fromUserId  Int
+  fromUser    User      @relation(name: "FromUserRelation", fields: [fromUserId], references: [id])
+  toUserId    Int
+  toUser      User      @relation(name: "ToUserRelation", fields: [toUserId], references: [id])
+}
+
 
 enum AuthType {
   Google
   Github
 }
 
-enum onRampStatus {
+enum TransactionStatus {
   Successful
   Processing
   Failed
