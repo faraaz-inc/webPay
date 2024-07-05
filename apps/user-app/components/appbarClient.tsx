@@ -5,6 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { authOptions } from "../lib/auth";
 
+
 export function AppbarClient() {
     const session = useSession();
     const router = useRouter();
